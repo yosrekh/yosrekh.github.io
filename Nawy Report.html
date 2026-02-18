@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>تقرير التحليل التقني — Nawy.com</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+      :root{
+        --bg:#0f1724; /* dark blue */
+        --card:#0b1220;
+        --muted:#9aa4b2;
+        --accent:#00d1b2; /* teal accent */
+        --glass: rgba(255,255,255,0.03);
+        --glass-2: rgba(255,255,255,0.02);
+        --success:#6ee7b7;
+        --danger:#ff7a7a;
+        --max-width:1100px;
+      }
+      *{box-sizing:border-box}
+      html,body{height:100%}
+      body{
+        margin:0;
+        font-family: 'Cairo', system-ui, Arial, sans-serif;
+        background:linear-gradient(180deg,#071127 0%, #081426 100%);
+        color:#e6eef6;
+        direction:rtl;
+        -webkit-font-smoothing:antialiased;
+        -moz-osx-font-smoothing:grayscale;
+        line-height:1.65;
+      }
+      .wrap{max-width:var(--max-width);margin:36px auto;padding:28px;}
+      header{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:18px}
+      .brand{display:flex;gap:14px;align-items:center}
+      .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#6fc3ff);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(2,6,23,0.6);}
+      .logo svg{filter:drop-shadow(0 4px 12px rgba(0,0,0,0.6))}
+      h1{font-size:20px;margin:0;font-weight:700}
+      .sub{color:var(--muted);font-size:13px}
+
+      .grid{display:grid;grid-template-columns:1fr 340px;gap:20px}
+      @media (max-width:980px){.grid{grid-template-columns:1fr} .aside{order:2}}
+
+      main{min-width:0}
+      .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 30px rgba(2,6,23,0.6);margin-bottom:18px;opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.3,1)}
+      .card.in-view{opacity:1;transform:none}
+      .card h2{margin:0 0 6px 0;font-size:16px}
+      .card p{margin:0 0 8px 0;color:var(--muted)}
+      .tag{display:inline-block;background:var(--glass);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted);margin-left:8px}
+
+      .tech-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+      .tech{background:var(--glass-2);padding:8px 10px;border-radius:8px;font-size:13px;color:#cfe8ff}
+
+      /* Stats */
+      .stats{display:flex;gap:12px;flex-wrap:wrap}
+      .stat{flex:1 1 160px;min-width:140px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
+      .stat .num{font-weight:700;font-size:20px;color:var(--accent)}
+      .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:10px}
+      .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#6fc3ff);transition:width 1.6s cubic-bezier(.2,.9,.3,1)}
+
+      /* List styles */
+      ul{padding-left:22px;margin:8px 0;color:var(--muted)}
+      li{margin:6px 0}
+
+      /* Right column */
+      .aside{position:relative}
+      .card.small{padding:14px}
+
+      /* Animation for headings */
+      .fade-up{opacity:0;transform:translateY(10px);transition:all .6s ease-out}
+      .fade-up.in-view{opacity:1;transform:none}
+
+      /* CTA */
+      .cta{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,#0ea5a9,#60a5fa);color:#021025;font-weight:700;text-decoration:none;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+
+      /* small helper */
+      .muted{color:var(--muted);font-size:13px}
+      .pill{display:inline-block;background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:999px;font-size:13px;color:#bfefff}
+
+      /* Footer */
+      footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+
+      /* Responsive tweaks */
+      @media (max-width:560px){.wrap{padding:18px} .logo{width:46px;height:46px}.grid{gap:12px}}
+
+      /* Subtle entrance animation */
+      @keyframes pop {0%{transform:translateY(8px) scale(.98);opacity:0}100%{transform:none;opacity:1}}
+
+      /* small decorative animation */
+      .sparkle{position:absolute;right:8px;top:8px;width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px}
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <header>
+        <div class="brand">
+          <div class="logo" aria-hidden>
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h18M12 3v18" stroke="#021025" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </div>
+          <div>
+            <h1>تقرير التحليل التقني — <span style="color:var(--accent)">Nawy.com</span></h1>
+            <div class="sub">نسخة مُنسّقة باللهجة المصرية — محتوى دون تغيير</div>
+          </div>
+        </div>
+        <div style="display:flex;gap:10px;align-items:center">
+          <a class="cta" href="#download">تحميل PDF</a>
+        </div>
+      </header>
+
+      <div class="grid">
+        <main>
+
+          <section class="card fade-up in-view">
+            <h2>1) الهندسة البرمجية الأساسية (Core Architecture) 🔧</h2>
+            <p class="muted">الموقع مبني كـ <strong>Headless CMS</strong> — فصل بين واجهة العرض ونظام إدارة المحتوى.</p>
+            <ul>
+              <li><strong>الإطار:</strong> <code>Next.js</code> (مبني على React).</li>
+              <li><strong>CMS:</strong> <code>WordPress</code> كـ Back-end / لوحة تحكم.</li>
+              <li><strong>لغات:</strong> PHP للـ Back-end، وJavaScript للـ Front-end.</li>
+            </ul>
+          </section>
+
+          <section class="card fade-up">
+            <h2>2) واجهة المستخدم والتصميم (Frontend & Styling) 🎨</h2>
+            <p class="muted">تنسيق الستايل معمول باستخدام CSS-in-JS للحصول على مرونة وسرعة في التعديلات.</p>
+            <div class="tech-list">
+              <span class="tech"><code>styled-components</code></span>
+              <span class="tech"><code>Emotion</code></span>
+            </div>
+          </section>
+
+          <section class="card fade-up">
+            <h2>3) تقنيات التطوير والعرض (Frontend Development) ⚙️</h2>
+            <p class="muted">الموقع بيعتمد على مكتبات حديثة لعرض واجهات معقدة بحركة سلسة.</p>
+            <ul>
+              <li><strong>المكتبات الأساسية:</strong> <code>styled-components</code> (6.1.19) و<code>Emotion</code>.</li>
+              <li><strong>الرسوم المتحركة:</strong> <code>GSAP</code>.</li>
+              <li><strong>العناصر التفاعلية:</strong> <code>Swiper</code> و<code>Select2</code>.</li>
+            </ul>
+          </section>
+
+          <section class="card fade-up">
+            <h2>4) الأداء وSEO (Performance & SEO) ⚡️</h2>
+            <ul>
+              <li><strong>تحسين الصور:</strong> <code>EWWW Image Optimizer</code>.</li>
+              <li><strong>التخزين المؤقت:</strong> <code>WP Rocket</code>.</li>
+              <li><strong>SEO:</strong> <code>Yoast SEO</code>.</li>
+            </ul>
+          </section>
+
+          <section class="card fade-up">
+            <h2>5) التحليلات وتتبع الزوار (Analytics & Tracking) 📈</h2>
+            <ul>
+              <li><strong>خرائط حرارة:</strong> <code>Hotjar</code>, <code>Microsoft Clarity</code>.</li>
+              <li><strong>تتبع إعلانات:</strong> <code>Facebook Pixel</code>, <code>TikTok Pixel</code>, <code>Google Ads</code>.</li>
+              <li><strong>إدارة الوسوم:</strong> <code>Google Tag Manager</code>.</li>
+            </ul>
+          </section>
+
+          <section class="card fade-up">
+            <h2>6) البنية التحتية والأمان (Infrastructure & Security) 🔐</h2>
+            <ul>
+              <li><strong>الاستضافة وCDN:</strong> <code>AWS</code> + <code>CloudFront</code>.</li>
+              <li><strong>حماية:</strong> <code>Cloudflare</code>، HSTS، شهادات Amazon.</li>
+              <li><strong>التشفير:</strong> TLS 1.2 / TLS 1.3.</li>
+            </ul>
+            <p class="muted"><strong>السيرفر/قاعدة البيانات:</strong> Unix/Linux، <code>Nginx</code>، <code>MySQL</code>، وتخزين الصور على <code>S3</code>. تشغيل الكود على <code>EC2</code>، غالبًا t3.medium / t3.large.</p>
+          </section>
+
+          <section class="card fade-up">
+            <h2>7) التكلفة التقديرية 💸</h2>
+            <p class="muted">تقدير مصاريف السيرفر والحماية والتوزيع لموقع بحجم Nawy تقريبًا:</p>
+            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
+              <div class="pill">200$ — 500$ / شهر</div>
+              <div class="muted">
+                بدائل لتقليل التكلفة: Laravel كبديل للـ PHP أو Monorepo باستخدام <code>Next.js</code> + API Routes.
+              </div>
+            </div>
+          </section>
+
+          <section class="card fade-up">
+            <h2>8) تحليل الأداء</h2>
+            <div class="stats">
+              <div class="stat">
+                <div class="muted">أداء (PC)</div>
+                <div class="num" data-target="68">0%</div>
+                <div class="progress"><div class="fill" data-percent="68"></div></div>
+              </div>
+              <div class="stat">
+                <div class="muted">أداء (Mobile)</div>
+                <div class="num" data-target="54">0%</div>
+                <div class="progress"><div class="fill" data-percent="54"></div></div>
+              </div>
+              <div class="stat">
+                <div class="muted">تحليل SEO</div>
+                <div class="num" data-target="100">0%</div>
+                <div class="progress"><div class="fill" data-percent="100" style="background:linear-gradient(90deg,#34d399,#60a5fa)"></div></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="card fade-up">
+            <h2>9) نموذج العمل (كيف بيكسبوا)</h2>
+            <ul>
+              <li>العمولات: المصدر الرئيسي — عمولة من المطور العقاري.</li>
+              <li><strong>Nawy Now:</strong> شراء وحدات كاش أو تمويل وإعادة بيع/فوائد.</li>
+              <li>التسويق للمطورين: بيع الظهور لمشروعات كبرى.</li>
+            </ul>
+          </section>
+
+          <section class="card fade-up">
+            <h2>10) طريقة العمل كبزنس</h2>
+            <ol class="muted">
+              <li>جذب الزوار: اعتماد قوي على SEO.</li>
+              <li>جمع البيانات (Lead Gen): CTAs تطلب رقم التليفون.</li>
+              <li>التحليل الذكي: استخدام Hotjar وCRM لتصنيف الزوار.</li>
+              <li>الاستشارة البشرية: فريق مبيعات على شكل استشارات.</li>
+            </ol>
+          </section>
+
+          <section class="card fade-up">
+            <h2>11) نقاط القوة و12) التحديات</h2>
+            <p class="muted"><strong>نقاط القوة:</strong> مصداقية، Data-driven، UX سريع ومنظم.</p>
+            <p class="muted"><strong>التحديات:</strong> تذبذب السوق وتأثيره على الإيرادات، وتكلفة الاستحواذ (CAC) العالية.</p>
+          </section>
+
+          <section class="card fade-up">
+            <h2>13) الخلاصة</h2>
+            <p class="muted">ناوي أقرب لـ <strong>Data Company</strong> قبل ما تكون شركة عقارات — نجاحهم من ربط Next.js وAWS مع فريق مبيعات مدرّب.</p>
+          </section>
+
+          <section class="card fade-up">
+            <h2>14) فرص تنافسية (اقتراحات)</h2>
+            <ul>
+              <li><strong>Next‑Gen UX:</strong> بحث ذكي بـ AI، معاينات 3D بـ <code>Three.js</code>.</li>
+              <li><strong>استغلال البيانات:</strong> Predictive Pricing Engine، Hyper-Personalization.</li>
+              <li><strong>سد الفجوات:</strong> Automated Valuation Model (AVM).</li>
+              <li><strong>أتمتة المبيعات:</strong> AI Real Estate Agent ممزوج بـ GPT للوصول لـ ~90% من الاستفسارات.</li>
+            </ul>
+          </section>
+
+        </main>
+
+        <aside class="aside">
+          <div class="card small fade-up in-view">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
+              <div>
+                <div class="muted">ملف جاهز للتحميل</div>
+                <div style="font-weight:700;margin-top:6px">Nawy Report — HTML</div>
+              </div>
+              <div style="text-align:center">
+                <div class="sparkle">RTL</div>
+              </div>
+            </div>
+            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
+              <a class="cta" id="download" href="file:///C:/Users/yousre/Desktop/Nawy%20Report.pdf">تحميل PDF</a>
+              <a class="pill" href="file:///C:/Users/yousre/Desktop/Nawy%20Report.md">فتح مصدر (MD)</a>
+            </div>
+          </div>
+
+          <div class="card small fade-up">
+            <h3 style="margin:0 0 8px 0">معلومات سريعة</h3>
+            <div class="muted">الملف متوافق RTL ومُصمّم ليمتَّع القارئ وتسهيل المراجعة التقنية.</div>
+            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
+              <div class="pill">Responsive</div>
+              <div class="pill">Animations</div>
+              <div class="pill">Print-ready</div>
+            </div>
+          </div>
+
+          <div class="card small fade-up">
+            <h3 style="margin:0 0 8px 0">تعديل سريع؟</h3>
+            <div class="muted">قلّي لو عايز تغير اللون، تضيف لوجو، أو أطلّع نسخة Word (DOCX).</div>
+          </div>
+
+        </aside>
+      </div>
+
+      <footer>
+        محتوى التقرير مطابق للأصل — مفيش أي تغيير في الأرقام أو الأدوات.
+      </footer>
+    </div>
+
+    <script>
+      // Scroll reveal
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{
+          if(e.isIntersecting) e.target.classList.add('in-view');
+        })
+      },{threshold:0.12});
+      document.querySelectorAll('.fade-up,.card').forEach(n=>io.observe(n));
+
+      // Animate progress bars & counters when visible
+      const stats = document.querySelectorAll('.stat');
+      const counterObserver = new IntersectionObserver((entries,obs)=>{
+        entries.forEach(entry=>{
+          if(!entry.isIntersecting) return;
+          const stat = entry.target;
+          const num = stat.querySelector('.num');
+          const fill = stat.querySelector('.fill');
+          const target = parseInt(num.getAttribute('data-target'))||0;
+          const percent = parseInt(fill.getAttribute('data-percent'))||0;
+
+          // animate number
+          let start = 0; const dur = 1000; const startTs = performance.now();
+          const step = (ts)=>{
+            const p = Math.min((ts-startTs)/dur,1);
+            num.textContent = Math.floor(p*target) + '%';
+            if(p<1) requestAnimationFrame(step);
+          };
+          requestAnimationFrame(step);
+
+          // animate fill
+          setTimeout(()=>{ fill.style.width = percent + '%'; }, 80);
+
+          obs.unobserve(stat);
+        });
+      },{threshold:0.3});
+      document.querySelectorAll('.stat').forEach(s=>counterObserver.observe(s));
+
+      // Simple safe download fallback: if file links blocked, show alert
+      document.querySelectorAll('a[href^="file:"]').forEach(a=>{
+        a.addEventListener('click', (e)=>{
+          const href = a.getAttribute('href');
+          // browsers may block file:// links; show hint instead
+          e.preventDefault();
+          const text = 'لو الرابط مش شغال عندك: افتح الملف من سطح المكتب >> "Nawy Report.pdf"';
+          if(confirm(text + '\n\nهل تحبني أفتح لك الملف دلوقتي؟')){
+            window.location.href = href; // try to open anyway
+          }
+        })
+      });
+    </script>
+  </body>
+</html>
