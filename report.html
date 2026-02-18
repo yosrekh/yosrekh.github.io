@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير التحليل التقني - Nawy.com</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Hero Section */
+        header {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+            color: var(--white);
+            position: relative;
+            text-align: center;
+            padding: 80px 20px;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #60a5fa, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
+
+        .intro-msg {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-top: -50px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: right;
+        }
+
+        .intro-msg p {
+            font-size: 1.15rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 60px 0;
+        }
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to left, var(--primary), transparent);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f1f5f9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .tech-list li {
+            position: relative;
+            padding-right: 20px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .tech-list li::before {
+            content: '←';
+            position: absolute;
+            right: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .metric-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--secondary);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Business Section */
+        .business-flow {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 80px 20px;
+            border-radius: 40px;
+            margin: 40px 0;
+        }
+
+        .business-flow h2 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            background: var(--accent);
+            color: var(--secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        /* Action Plan */
+        .action-plan {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: var(--white);
+            padding: 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.3);
+        }
+
+        .action-plan h2 {
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .plan-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .plan-item h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .action-plan {
+                padding: 30px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container hero-content">
+            <h1 class="hero-title">التحليل العميق لموقع Nawy.com</h1>
+            <p class="hero-subtitle">تقرير تقني وإسنراتيجي شامل للوقوف على "سر نجاحهم" وإزاي نقدر نتفوق عليهم</p>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Message to Eng Ahmed -->
+        <div class="intro-msg reveal">
+            <p> بشمهندس أحمد، تحياتي ليك.</p>
+            <p style="margin-top: 10px; font-weight: 400;">أنا قعدت فحصت موقع "ناوي" حتة حتة، وعصرت كل التقنيات اللي
+                شغالين بيها عشان أجيب الخلاصة. من أول الكود والسيرفرات لحد
+                هما بيعملوا فلوس إزاي، وفي الآخر حطيتلك خطة إزاي نضربهم في مقتل ونبقى أحسن منهم بمراحل. اتفضل يا هندسة:
+            </p>
+        </div>
+
+        <!-- Technical Section -->
+        <section id="tech-analysis">
+            <div class="section-title reveal">الهندسة البرمجية (Core Architecture)</div>
+            <div class="card-grid">
+                <div class="card reveal">
+                    <h3>نظام الـ Headless CMS</h3>
+                    <p>الموقع مش شغال بنظام تقليدي، هما دامجين بين قوتين:</p>
+                    <ul class="tech-list">
+                        <li><b>الواجهة (Frontend):</b> شغالين بـ Next.js المبني على React عشان السرعة والـ SEO.</li>
+                        <li><b>الإدارة (Backend):</b> لسه مستخدمين WordPress كلوحة تحكم بس (Headless).</li>
+                        <li><b>اللغات:</b> ميكس بين PHP للباك إند و JavaScript للفرونت إند.</li>
+                        <li><b>قاعدة البيانات:</b> MySQL ، وهي مرتبطة بوجود الـ WordPress كـ Back-end.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>أدوات الـ Frontend والجماليات</h3>
+                    <p>عشان يطلعوا الحركات اللي بنشوفها، مستخدمين تقنيات تقيلة:</p>
+                    <ul class="tech-list">
+                        <li><b>التنسيق:</b> styled-components و Emotion عشان مرونة الديزاين.</li>
+                        <li><b>الأنيميشن:</b> مكتبة GSAP الاحترافية هي اللي عاملة الحركات الناعمة دي.</li>
+                        <li><b>السلايدرز:</b> Swiper و Select2 للقوائم المرتبة.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>الأداء والـ SEO</h3>
+                    <p>عشان نتايج البحث تطلع فوق والصفحة تفتح في لحظة:</p>
+                    <ul class="tech-list">
+                        <li><b>الصور:</b> بيستخدموا EWWW Image Optimizer عشان الضغط.</li>
+                        <li><b>الكاش (Caching):</b> معتمدين على WP Rocket للتسريع.</li>
+                        <li><b>محررات البحث:</b> أكيد Yoast SEO هو المايسترو هنا.</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Infrastructure -->
+        <section id="infrastructure">
+            <div class="section-title reveal">البنية التحتية والسيرفرات</div>
+            <div class="card-grid">
+                <div class="card reveal">
+                    <h3>جيش Amazon (AWS)</h3>
+                    <p>هما مش حاطين موقعهم على استضافة عادية، دول شغالين على سيرفرات أمازون:</p>
+                    <ul class="tech-list">
+                        <li><b>Amazon S3:</b> لتخزين الصور بعيد عن السيرفر الأساسي.</li>
+                        <li><b>Amazon EC2:</b> غالباً فئات t3.medium لتشغيل الأكواد.</li>
+                        <li><b>CloudFront:</b> الـ CDN اللي بيوزع المحتوى بسرعة البرق.</li>
+                        <li><b>Cloudflare:</b> للحماية من الهجمات وإدارة الترافيك.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>التكاليف التقديرية</h3>
+                    <p>بناءً على الحجم ده، هما بيصرفوا ميزانية محترمة:</p>
+                    <ul class="tech-list">
+                        <li><b>المصاريف:</b> من 200$ لحد 500$ شهرياً سيرفرات بس.</li>
+                        <li><b>النظام:</b> شغالين Pay-as-you-go يعني الدفع على قد الاستخدام.</li>
+                        <li><b>الخلاصة:</b> هما شركة Data قبل ما يكونوا شركة عقارات.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="metrics reveal">
+                <div class="metric-item">
+                    <div class="metric-value">68%</div>
+                    <div class="metric-label">أداء الـ PC</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">54%</div>
+                    <div class="metric-label">أداء الموبايل</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">100%</div>
+                    <div class="metric-label">قوة الـ SEO</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Model & Flow -->
+        <section class="reveal">
+            <div class="section-title">نموذج العمل والربح (Business Model)</div>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>العمولات (Commissions)</h3>
+                    <p>دي السبوبة الكبيرة، بياخدوا عمولتهم من المطور العقاري مش من المشتري في المشاريع الجديدة.</p>
+                </div>
+                <div class="card">
+                    <h3>خدمة Nawy Now</h3>
+                    <p>بيشتروا الوحدات كاش أو يمولوا بيعها، ودي بتدخلهم فلوس من إعادة البيع أو فوائد التمويل.</p>
+                </div>
+                <div class="card">
+                    <h3>التسويق للمطورين</h3>
+                    <p>بياخدوا مبالغ من الشركات الكبيرة عشان يبروزا مشاريعهم في الواجهة للزوار.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="business-flow reveal">
+            <h2>دورة العمل الذكية (The Operational Flow)</h2>
+            <div class="step-container">
+                <div class="step">
+                    <div class="step-num">أ</div>
+                    <div class="step-content">
+                        <h4>جذب الزوار (Traffic Acquisition)</h4>
+                        <p>تصدر نتايج البحث بفضل الـ SEO والكلمات زي "شقة في التجمع" أو "أسعار مراسي".</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">ب</div>
+                    <div class="step-content">
+                        <h4>جمع البيانات (Lead Generation)</h4>
+                        <p>تصميم الموقع بيخليك تسيب رقم موبايلك مقابل "كتيب المشروع" أو "قائمة الأسعار". كدة بقيت عميل
+                            محتمل.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">ج</div>
+                    <div class="step-content">
+                        <h4>التحليل الذكي (Data Engine)</h4>
+                        <p>هنا التكنولوجيا بتعرف إنت بتدور على إيه (تقسيط ولا استثمار) بناءً على حركتك (بأدوات زي Hotjar
+                            و Zoho CRM).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">د</div>
+                    <div class="step-content">
+                        <h4>الاستشارة البشرية (Sales Force)</h4>
+                        <p>البيانات بتروح لفريق مبيعات شاطر بيكلمك كـ "مستشار"، وده اللي بيفرقهم عن السماسرة التقليديين.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Insights Section -->
+        <section id="insights">
+            <div class="section-title reveal">ليه هما ناجحين؟ (نقاط القوة)</div>
+            <div class="card-grid">
+                <div class="card reveal" style="border-right: 5px solid #10b981;">
+                    <h3>المصداقية</h3>
+                    <p>ناوي قدمت "براند" مؤسسي بيدي أمان للمشتري وسط زحمة السماسرة.</p>
+                </div>
+                <div class="card reveal" style="border-right: 5px solid #10b981;">
+                    <h3>البيانات (Data-Driven)</h3>
+                    <p>عارفين امتى الطلب بيزيد وفين، فبيوجهوا ميزانية الإعلانات بذكاء جداً (سر أدوات التتبع).</p>
+                </div>
+                <div class="card reveal" style="border-right: 5px solid #10b981;">
+                    <h3>تجربة المستخدم (UX)</h3>
+                    <p>الموقع سريع ومنظم، بيخلي رحلة البحث عن "بيت العمر" سهلة ومن غير وجع دماغ.</p>
+                </div>
+            </div>
+
+            <div class="section-title reveal" style="margin-top: 50px;">التحديات (نقاط الضعف)</div>
+            <div class="card-grid">
+                <div class="card reveal" style="border-right: 5px solid #ef4444;">
+                    <h3>تذبذب السوق</h3>
+                    <p>أي ركود عقاري بيأثر عليهم فوراً لأن دخلهم كله مرتبط بحركة البيع والعمولات.</p>
+                </div>
+                <div class="card reveal" style="border-right: 5px solid #ef4444;">
+                    <h3>تكلفة الاستحواذ (CAC)</h3>
+                    <p>الصرف على الإعلانات (جوجل، فيسبوك، تيك توك) مكلف جداً، ومحتاجين صفقات ضخمة مستمرة لتغطية
+                        المصاريف.</p>
+                </div>
+            </div>
+
+            <div class="card reveal" style="margin-top: 40px; background: #fffbeb; border: 1px solid #fcd34d;">
+                <p style="text-align: center; font-size: 1.1rem; color: #92400e;"><b>الخلاصة يا هندسة:</b> ناوي شركة
+                    <b>Data</b> قبل ما تكون شركة عقارات. نجاحهم قايم على نظام تقني محكم بيربط بين Next.js وسيرفرات
+                    أمازون وفريق مبيعات مدرب يحول "البحث" لـ "بيع".
+                </p>
+            </div>
+        </section>
+
+        <!-- Strategy for Us -->
+        <section class="action-plan reveal">
+            <h2>إزاي نغطّي عليهم؟ (خطة الهجوم)</h2>
+
+            <div class="plan-item">
+                <h4>1. تجربة مستخدم من كوكب تاني (Next-Gen UX)</h4>
+                <p>بدل الفلاتر العادية ممكن نعمل <b>بحث بالذكاء الاصطناعي</b>. العميل يدخل يكتب: "عايز شقة قريبة من
+                    الجامعة الأمريكية وتقسيطها مريح"، والسيستم يفهمه ويرد عليه فوراً.</p>
+            </div>
+
+            <div class="plan-item">
+                <h4>2. سلاح البيانات والتوقعات (Predictive Data)</h4>
+                <p>هنعمل "محرك توقع أسعار". العميل يعرف سعر المتر في المنطقة دي هيبقى كام كمان سنتين. ده هيخلي
+                    المستثمرين يجروا ورانا لأننا بنقدم رؤية مستقبلية مش مجرد إعلان.</p>
+            </div>
+
+            <div class="plan-item">
+                <h4>3. أتمتة المبيعات (AI Sales Agent)</h4>
+                <p>أكبر تكلفة عند ناوي هي جيش المبيعات. إحنا م مكن نستخدم بوت متطور مربوط بـ GPT-4 يرد على 90% من
+                    استفسارات
+                    العملاء العميقة، وما يحولش العميل للموظف إلا وهو جاهز يمضي!</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>تم إعداد هذا التقرير للعرض على البشمهندس أحمد</p>
+    </footer>
+
+    <script>
+        // GSAP Initialization
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Header Animations
+        gsap.from(".hero-title", {
+            duration: 1.5,
+            y: 100,
+            opacity: 0,
+            ease: "power4.out"
+        });
+
+        gsap.from(".hero-subtitle", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.5,
+            ease: "power4.out"
+        });
+
+        // Reveal animations on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // Card Hover specialized animation (optional addition via JS if needed, but CSS handles basic)
+    </script>
+</body>
+
+</html>
