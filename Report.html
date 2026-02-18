@@ -1,334 +1,579 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ar" dir="rtl">
-  <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>تقرير التحليل التقني — Nawy.com</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>تقرير التحليل التقني - Nawy.com</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <style>
-      :root{
-        --bg:#0f1724; /* dark blue */
-        --card:#0b1220;
-        --muted:#9aa4b2;
-        --accent:#00d1b2; /* teal accent */
-        --glass: rgba(255,255,255,0.03);
-        --glass-2: rgba(255,255,255,0.02);
-        --success:#6ee7b7;
-        --danger:#ff7a7a;
-        --max-width:1100px;
-      }
-      *{box-sizing:border-box}
-      html,body{height:100%}
-      body{
-        margin:0;
-        font-family: 'Cairo', system-ui, Arial, sans-serif;
-        background:linear-gradient(180deg,#071127 0%, #081426 100%);
-        color:#e6eef6;
-        direction:rtl;
-        -webkit-font-smoothing:antialiased;
-        -moz-osx-font-smoothing:grayscale;
-        line-height:1.65;
-      }
-      .wrap{max-width:var(--max-width);margin:36px auto;padding:28px;}
-      header{display:flex;gap:18px;align-items:center;justify-content:space-between;margin-bottom:18px}
-      .brand{display:flex;gap:14px;align-items:center}
-      .logo{width:56px;height:56px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#6fc3ff);display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(2,6,23,0.6);}
-      .logo svg{filter:drop-shadow(0 4px 12px rgba(0,0,0,0.6))}
-      h1{font-size:20px;margin:0;font-weight:700}
-      .sub{color:var(--muted);font-size:13px}
+        :root {
+            --primary: #2563eb;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --text-main: #1e293b;
+            --text-muted: #64748b;
+            --bg-light: #f8fafc;
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.8);
+            --shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.1);
+        }
 
-      .grid{display:grid;grid-template-columns:1fr 340px;gap:20px}
-      @media (max-width:980px){.grid{grid-template-columns:1fr} .aside{order:2}}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+        }
 
-      main{min-width:0}
-      .card{background:linear-gradient(180deg,var(--card), rgba(255,255,255,0.02));padding:20px;border-radius:12px;border:1px solid rgba(255,255,255,0.03);box-shadow:0 6px 30px rgba(2,6,23,0.6);margin-bottom:18px;opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.3,1)}
-      .card.in-view{opacity:1;transform:none}
-      .card h2{margin:0 0 6px 0;font-size:16px}
-      .card p{margin:0 0 8px 0;color:var(--muted)}
-      .tag{display:inline-block;background:var(--glass);padding:6px 10px;border-radius:999px;font-size:12px;color:var(--muted);margin-left:8px}
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-main);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
 
-      .tech-list{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-      .tech{background:var(--glass-2);padding:8px 10px;border-radius:8px;font-size:13px;color:#cfe8ff}
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
-      /* Stats */
-      .stats{display:flex;gap:12px;flex-wrap:wrap}
-      .stat{flex:1 1 160px;min-width:140px;background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.02)}
-      .stat .num{font-weight:700;font-size:20px;color:var(--accent)}
-      .progress{height:10px;background:rgba(255,255,255,0.03);border-radius:999px;overflow:hidden;margin-top:10px}
-      .progress .fill{height:100%;width:0;background:linear-gradient(90deg,var(--accent),#6fc3ff);transition:width 1.6s cubic-bezier(.2,.9,.3,1)}
+        /* Hero Section */
+        header {
+            min-height: 60vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, var(--secondary) 0%, #1e293b 100%);
+            color: var(--white);
+            position: relative;
+            text-align: center;
+            padding: 80px 20px;
+            overflow: hidden;
+        }
 
-      /* List styles */
-      ul{padding-left:22px;margin:8px 0;color:var(--muted)}
-      li{margin:6px 0}
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('https://www.transparenttextures.com/patterns/cubes.png');
+            opacity: 0.1;
+        }
 
-      /* Right column */
-      .aside{position:relative}
-      .card.small{padding:14px}
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
 
-      /* Animation for headings */
-      .fade-up{opacity:0;transform:translateY(10px);transition:all .6s ease-out}
-      .fade-up.in-view{opacity:1;transform:none}
+        .hero-title {
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 900;
+            margin-bottom: 20px;
+            background: linear-gradient(to right, #60a5fa, #fbbf24);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-      /* CTA */
-      .cta{display:inline-flex;gap:8px;align-items:center;padding:10px 14px;border-radius:10px;background:linear-gradient(90deg,#0ea5a9,#60a5fa);color:#021025;font-weight:700;text-decoration:none;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+        .hero-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            max-width: 700px;
+            margin: 0 auto;
+            opacity: 0.9;
+        }
 
-      /* small helper */
-      .muted{color:var(--muted);font-size:13px}
-      .pill{display:inline-block;background:rgba(255,255,255,0.02);padding:6px 10px;border-radius:999px;font-size:13px;color:#bfefff}
+        .intro-msg {
+            background: var(--glass);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            margin-top: -50px;
+            margin-bottom: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-align: right;
+        }
 
-      /* Footer */
-      footer{margin-top:18px;color:var(--muted);font-size:13px;text-align:center}
+        .intro-msg p {
+            font-size: 1.15rem;
+            color: var(--secondary);
+            font-weight: 600;
+        }
 
-      /* Responsive tweaks */
-      @media (max-width:560px){.wrap{padding:18px} .logo{width:46px;height:46px}.grid{gap:12px}}
+        /* Section Styling */
+        section {
+            padding: 60px 0;
+        }
 
-      /* Subtle entrance animation */
-      @keyframes pop {0%{transform:translateY(8px) scale(.98);opacity:0}100%{transform:none;opacity:1}}
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 40px;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
 
-      /* small decorative animation */
-      .sparkle{position:absolute;right:8px;top:8px;width:36px;height:36px;border-radius:8px;background:linear-gradient(135deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:11px}
+        .section-title::after {
+            content: '';
+            flex: 1;
+            height: 2px;
+            background: linear-gradient(to left, var(--primary), transparent);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .card {
+            background: var(--white);
+            padding: 30px;
+            border-radius: 24px;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid #f1f5f9;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card p {
+            font-size: 0.95rem;
+            color: var(--text-main);
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-top: 15px;
+        }
+
+        .tech-list li {
+            position: relative;
+            padding-right: 20px;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+
+        .tech-list li::before {
+            content: '←';
+            position: absolute;
+            right: 0;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        /* Metrics */
+        .metrics {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .metric-item {
+            background: var(--white);
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            border-bottom: 4px solid var(--primary);
+        }
+
+        .metric-value {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--secondary);
+        }
+
+        .metric-label {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        /* Business Section */
+        .business-flow {
+            background: var(--secondary);
+            color: var(--white);
+            padding: 80px 20px;
+            border-radius: 40px;
+            margin: 40px 0;
+        }
+
+        .business-flow h2 {
+            color: var(--accent);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .step-container {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+
+        .step {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .step-num {
+            background: var(--accent);
+            color: var(--secondary);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        /* Action Plan */
+        .action-plan {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+            color: var(--white);
+            padding: 60px;
+            border-radius: 30px;
+            box-shadow: 0 20px 50px rgba(37, 99, 235, 0.3);
+        }
+
+        .action-plan h2 {
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+
+        .plan-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .plan-item h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+
+        /* Animations */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+
+            .action-plan {
+                padding: 30px;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
-  </head>
-  <body>
-    <div class="wrap">
-      <header>
-        <div class="brand">
-          <div class="logo" aria-hidden>
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M3 12h18M12 3v18" stroke="#021025" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          </div>
-          <div>
-            <h1>تقرير التحليل التقني — <span style="color:var(--accent)">Nawy.com</span></h1>
-            <div class="sub">نسخة مُنسّقة باللهجة المصرية — محتوى دون تغيير</div>
-          </div>
+</head>
+
+<body>
+
+    <header>
+        <div class="container hero-content">
+            <h1 class="hero-title">التحليل العميق لموقع Nawy.com</h1>
+            <p class="hero-subtitle">تقرير تقني وإسنراتيجي شامل للوقوف على "سر نجاحهم" وإزاي نقدر نتفوق عليهم</p>
         </div>
-        <div style="display:flex;gap:10px;align-items:center">
-          <a class="cta" href="#download">تحميل PDF</a>
+    </header>
+
+    <main class="container">
+        <!-- Message to Eng Ahmed -->
+        <div class="intro-msg reveal">
+            <p> بشمهندس أحمد، تحياتي ليك.</p>
+            <p style="margin-top: 10px; font-weight: 400;">أنا قعدت فحصت موقع "ناوي" حتة حتة، وعصرت كل التقنيات اللي
+                شغالين بيها عشان أجيب الخلاصة. من أول الكود والسيرفرات لحد
+                هما بيعملوا فلوس إزاي، وفي الآخر حطيتلك خطة إزاي نضربهم في مقتل ونبقى أحسن منهم بمراحل. اتفضل يا هندسة:
+            </p>
         </div>
-      </header>
 
-      <div class="grid">
-        <main>
-
-          <section class="card fade-up in-view">
-            <h2>1) الهندسة البرمجية الأساسية (Core Architecture) 🔧</h2>
-            <p class="muted">الموقع مبني كـ <strong>Headless CMS</strong> — فصل بين واجهة العرض ونظام إدارة المحتوى.</p>
-            <ul>
-              <li><strong>الإطار:</strong> <code>Next.js</code> (مبني على React).</li>
-              <li><strong>CMS:</strong> <code>WordPress</code> كـ Back-end / لوحة تحكم.</li>
-              <li><strong>لغات:</strong> PHP للـ Back-end، وJavaScript للـ Front-end.</li>
-            </ul>
-          </section>
-
-          <section class="card fade-up">
-            <h2>2) واجهة المستخدم والتصميم (Frontend & Styling) 🎨</h2>
-            <p class="muted">تنسيق الستايل معمول باستخدام CSS-in-JS للحصول على مرونة وسرعة في التعديلات.</p>
-            <div class="tech-list">
-              <span class="tech"><code>styled-components</code></span>
-              <span class="tech"><code>Emotion</code></span>
+        <!-- Technical Section -->
+        <section id="tech-analysis">
+            <div class="section-title reveal">الهندسة البرمجية (Core Architecture)</div>
+            <div class="card-grid">
+                <div class="card reveal">
+                    <h3>نظام الـ Headless CMS</h3>
+                    <p>الموقع مش شغال بنظام تقليدي، هما دامجين بين قوتين:</p>
+                    <ul class="tech-list">
+                        <li><b>الواجهة (Frontend):</b> شغالين بـ Next.js المبني على React عشان السرعة والـ SEO.</li>
+                        <li><b>الإدارة (Backend):</b> لسه مستخدمين WordPress كلوحة تحكم بس (Headless).</li>
+                        <li><b>اللغات:</b> ميكس بين PHP للباك إند و JavaScript للفرونت إند.</li>
+                        <li><b>قاعدة البيانات:</b> MySQL ، وهي مرتبطة بوجود الـ WordPress كـ Back-end.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>أدوات الـ Frontend والجماليات</h3>
+                    <p>عشان يطلعوا الحركات اللي بنشوفها، مستخدمين تقنيات تقيلة:</p>
+                    <ul class="tech-list">
+                        <li><b>التنسيق:</b> styled-components و Emotion عشان مرونة الديزاين.</li>
+                        <li><b>الأنيميشن:</b> مكتبة GSAP الاحترافية هي اللي عاملة الحركات الناعمة دي.</li>
+                        <li><b>السلايدرز:</b> Swiper و Select2 للقوائم المرتبة.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>الأداء والـ SEO</h3>
+                    <p>عشان نتايج البحث تطلع فوق والصفحة تفتح في لحظة:</p>
+                    <ul class="tech-list">
+                        <li><b>الصور:</b> بيستخدموا EWWW Image Optimizer عشان الضغط.</li>
+                        <li><b>الكاش (Caching):</b> معتمدين على WP Rocket للتسريع.</li>
+                        <li><b>محررات البحث:</b> أكيد Yoast SEO هو المايسترو هنا.</li>
+                    </ul>
+                </div>
             </div>
-          </section>
+        </section>
 
-          <section class="card fade-up">
-            <h2>3) تقنيات التطوير والعرض (Frontend Development) ⚙️</h2>
-            <p class="muted">الموقع بيعتمد على مكتبات حديثة لعرض واجهات معقدة بحركة سلسة.</p>
-            <ul>
-              <li><strong>المكتبات الأساسية:</strong> <code>styled-components</code> (6.1.19) و<code>Emotion</code>.</li>
-              <li><strong>الرسوم المتحركة:</strong> <code>GSAP</code>.</li>
-              <li><strong>العناصر التفاعلية:</strong> <code>Swiper</code> و<code>Select2</code>.</li>
-            </ul>
-          </section>
-
-          <section class="card fade-up">
-            <h2>4) الأداء وSEO (Performance & SEO) ⚡️</h2>
-            <ul>
-              <li><strong>تحسين الصور:</strong> <code>EWWW Image Optimizer</code>.</li>
-              <li><strong>التخزين المؤقت:</strong> <code>WP Rocket</code>.</li>
-              <li><strong>SEO:</strong> <code>Yoast SEO</code>.</li>
-            </ul>
-          </section>
-
-          <section class="card fade-up">
-            <h2>5) التحليلات وتتبع الزوار (Analytics & Tracking) 📈</h2>
-            <ul>
-              <li><strong>خرائط حرارة:</strong> <code>Hotjar</code>, <code>Microsoft Clarity</code>.</li>
-              <li><strong>تتبع إعلانات:</strong> <code>Facebook Pixel</code>, <code>TikTok Pixel</code>, <code>Google Ads</code>.</li>
-              <li><strong>إدارة الوسوم:</strong> <code>Google Tag Manager</code>.</li>
-            </ul>
-          </section>
-
-          <section class="card fade-up">
-            <h2>6) البنية التحتية والأمان (Infrastructure & Security) 🔐</h2>
-            <ul>
-              <li><strong>الاستضافة وCDN:</strong> <code>AWS</code> + <code>CloudFront</code>.</li>
-              <li><strong>حماية:</strong> <code>Cloudflare</code>، HSTS، شهادات Amazon.</li>
-              <li><strong>التشفير:</strong> TLS 1.2 / TLS 1.3.</li>
-            </ul>
-            <p class="muted"><strong>السيرفر/قاعدة البيانات:</strong> Unix/Linux، <code>Nginx</code>، <code>MySQL</code>، وتخزين الصور على <code>S3</code>. تشغيل الكود على <code>EC2</code>، غالبًا t3.medium / t3.large.</p>
-          </section>
-
-          <section class="card fade-up">
-            <h2>7) التكلفة التقديرية 💸</h2>
-            <p class="muted">تقدير مصاريف السيرفر والحماية والتوزيع لموقع بحجم Nawy تقريبًا:</p>
-            <div style="display:flex;gap:12px;align-items:center;flex-wrap:wrap">
-              <div class="pill">200$ — 500$ / شهر</div>
-              <div class="muted">
-                بدائل لتقليل التكلفة: Laravel كبديل للـ PHP أو Monorepo باستخدام <code>Next.js</code> + API Routes.
-              </div>
+        <!-- Infrastructure -->
+        <section id="infrastructure">
+            <div class="section-title reveal">البنية التحتية والسيرفرات</div>
+            <div class="card-grid">
+                <div class="card reveal">
+                    <h3>جيش Amazon (AWS)</h3>
+                    <p>هما مش حاطين موقعهم على استضافة عادية، دول شغالين على سيرفرات أمازون:</p>
+                    <ul class="tech-list">
+                        <li><b>Amazon S3:</b> لتخزين الصور بعيد عن السيرفر الأساسي.</li>
+                        <li><b>Amazon EC2:</b> غالباً فئات t3.medium لتشغيل الأكواد.</li>
+                        <li><b>CloudFront:</b> الـ CDN اللي بيوزع المحتوى بسرعة البرق.</li>
+                        <li><b>Cloudflare:</b> للحماية من الهجمات وإدارة الترافيك.</li>
+                    </ul>
+                </div>
+                <div class="card reveal">
+                    <h3>التكاليف التقديرية</h3>
+                    <p>بناءً على الحجم ده، هما بيصرفوا ميزانية محترمة:</p>
+                    <ul class="tech-list">
+                        <li><b>المصاريف:</b> من 200$ لحد 500$ شهرياً سيرفرات بس.</li>
+                        <li><b>النظام:</b> شغالين Pay-as-you-go يعني الدفع على قد الاستخدام.</li>
+                        <li><b>الخلاصة:</b> هما شركة Data قبل ما يكونوا شركة عقارات.</li>
+                    </ul>
+                </div>
             </div>
-          </section>
 
-          <section class="card fade-up">
-            <h2>8) تحليل الأداء</h2>
-            <div class="stats">
-              <div class="stat">
-                <div class="muted">أداء (PC)</div>
-                <div class="num" data-target="68">0%</div>
-                <div class="progress"><div class="fill" data-percent="68"></div></div>
-              </div>
-              <div class="stat">
-                <div class="muted">أداء (Mobile)</div>
-                <div class="num" data-target="54">0%</div>
-                <div class="progress"><div class="fill" data-percent="54"></div></div>
-              </div>
-              <div class="stat">
-                <div class="muted">تحليل SEO</div>
-                <div class="num" data-target="100">0%</div>
-                <div class="progress"><div class="fill" data-percent="100" style="background:linear-gradient(90deg,#34d399,#60a5fa)"></div></div>
-              </div>
+            <div class="metrics reveal">
+                <div class="metric-item">
+                    <div class="metric-value">68%</div>
+                    <div class="metric-label">أداء الـ PC</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">54%</div>
+                    <div class="metric-label">أداء الموبايل</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-value">100%</div>
+                    <div class="metric-label">قوة الـ SEO</div>
+                </div>
             </div>
-          </section>
+        </section>
 
-          <section class="card fade-up">
-            <h2>9) نموذج العمل (كيف بيكسبوا)</h2>
-            <ul>
-              <li>العمولات: المصدر الرئيسي — عمولة من المطور العقاري.</li>
-              <li><strong>Nawy Now:</strong> شراء وحدات كاش أو تمويل وإعادة بيع/فوائد.</li>
-              <li>التسويق للمطورين: بيع الظهور لمشروعات كبرى.</li>
-            </ul>
-          </section>
-
-          <section class="card fade-up">
-            <h2>10) طريقة العمل كبزنس</h2>
-            <ol class="muted">
-              <li>جذب الزوار: اعتماد قوي على SEO.</li>
-              <li>جمع البيانات (Lead Gen): CTAs تطلب رقم التليفون.</li>
-              <li>التحليل الذكي: استخدام Hotjar وCRM لتصنيف الزوار.</li>
-              <li>الاستشارة البشرية: فريق مبيعات على شكل استشارات.</li>
-            </ol>
-          </section>
-
-          <section class="card fade-up">
-            <h2>11) نقاط القوة و12) التحديات</h2>
-            <p class="muted"><strong>نقاط القوة:</strong> مصداقية، Data-driven، UX سريع ومنظم.</p>
-            <p class="muted"><strong>التحديات:</strong> تذبذب السوق وتأثيره على الإيرادات، وتكلفة الاستحواذ (CAC) العالية.</p>
-          </section>
-
-          <section class="card fade-up">
-            <h2>13) الخلاصة</h2>
-            <p class="muted">ناوي أقرب لـ <strong>Data Company</strong> قبل ما تكون شركة عقارات — نجاحهم من ربط Next.js وAWS مع فريق مبيعات مدرّب.</p>
-          </section>
-
-          <section class="card fade-up">
-            <h2>14) فرص تنافسية (اقتراحات)</h2>
-            <ul>
-              <li><strong>Next‑Gen UX:</strong> بحث ذكي بـ AI، معاينات 3D بـ <code>Three.js</code>.</li>
-              <li><strong>استغلال البيانات:</strong> Predictive Pricing Engine، Hyper-Personalization.</li>
-              <li><strong>سد الفجوات:</strong> Automated Valuation Model (AVM).</li>
-              <li><strong>أتمتة المبيعات:</strong> AI Real Estate Agent ممزوج بـ GPT للوصول لـ ~90% من الاستفسارات.</li>
-            </ul>
-          </section>
-
-        </main>
-
-        <aside class="aside">
-          <div class="card small fade-up in-view">
-            <div style="display:flex;justify-content:space-between;align-items:center;gap:10px">
-              <div>
-                <div class="muted">ملف جاهز للتحميل</div>
-                <div style="font-weight:700;margin-top:6px">Nawy Report — HTML</div>
-              </div>
-              <div style="text-align:center">
-                <div class="sparkle">RTL</div>
-              </div>
+        <!-- Business Model & Flow -->
+        <section class="reveal">
+            <div class="section-title">نموذج العمل والربح (Business Model)</div>
+            <div class="card-grid">
+                <div class="card">
+                    <h3>العمولات (Commissions)</h3>
+                    <p>دي السبوبة الكبيرة، بياخدوا عمولتهم من المطور العقاري مش من المشتري في المشاريع الجديدة.</p>
+                </div>
+                <div class="card">
+                    <h3>خدمة Nawy Now</h3>
+                    <p>بيشتروا الوحدات كاش أو يمولوا بيعها، ودي بتدخلهم فلوس من إعادة البيع أو فوائد التمويل.</p>
+                </div>
+                <div class="card">
+                    <h3>التسويق للمطورين</h3>
+                    <p>بياخدوا مبالغ من الشركات الكبيرة عشان يبروزا مشاريعهم في الواجهة للزوار.</p>
+                </div>
             </div>
-            <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap">
-              <a class="cta" id="download" href="file:///C:/Users/yousre/Desktop/Nawy%20Report.pdf">تحميل PDF</a>
-              <a class="pill" href="file:///C:/Users/yousre/Desktop/Nawy%20Report.md">فتح مصدر (MD)</a>
+        </section>
+
+        <section class="business-flow reveal">
+            <h2>دورة العمل الذكية (The Operational Flow)</h2>
+            <div class="step-container">
+                <div class="step">
+                    <div class="step-num">أ</div>
+                    <div class="step-content">
+                        <h4>جذب الزوار (Traffic Acquisition)</h4>
+                        <p>تصدر نتايج البحث بفضل الـ SEO والكلمات زي "شقة في التجمع" أو "أسعار مراسي".</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">ب</div>
+                    <div class="step-content">
+                        <h4>جمع البيانات (Lead Generation)</h4>
+                        <p>تصميم الموقع بيخليك تسيب رقم موبايلك مقابل "كتيب المشروع" أو "قائمة الأسعار". كدة بقيت عميل
+                            محتمل.</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">ج</div>
+                    <div class="step-content">
+                        <h4>التحليل الذكي (Data Engine)</h4>
+                        <p>هنا التكنولوجيا بتعرف إنت بتدور على إيه (تقسيط ولا استثمار) بناءً على حركتك (بأدوات زي Hotjar
+                            و Zoho CRM).</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-num">د</div>
+                    <div class="step-content">
+                        <h4>الاستشارة البشرية (Sales Force)</h4>
+                        <p>البيانات بتروح لفريق مبيعات شاطر بيكلمك كـ "مستشار"، وده اللي بيفرقهم عن السماسرة التقليديين.
+                        </p>
+                    </div>
+                </div>
             </div>
-          </div>
+        </section>
 
-          <div class="card small fade-up">
-            <h3 style="margin:0 0 8px 0">معلومات سريعة</h3>
-            <div class="muted">الملف متوافق RTL ومُصمّم ليمتَّع القارئ وتسهيل المراجعة التقنية.</div>
-            <div style="margin-top:10px;display:flex;gap:8px;align-items:center">
-              <div class="pill">Responsive</div>
-              <div class="pill">Animations</div>
-              <div class="pill">Print-ready</div>
+        <!-- Insights Section -->
+        <section id="insights">
+            <div class="section-title reveal">ليه هما ناجحين؟ (نقاط القوة)</div>
+            <div class="card-grid">
+                <div class="card reveal" style="border-right: 5px solid #10b981;">
+                    <h3>المصداقية</h3>
+                    <p>ناوي قدمت "براند" مؤسسي بيدي أمان للمشتري وسط زحمة السماسرة.</p>
+                </div>
+                <div class="card reveal" style="border-right: 5px solid #10b981;">
+                    <h3>البيانات (Data-Driven)</h3>
+                    <p>عارفين امتى الطلب بيزيد وفين، فبيوجهوا ميزانية الإعلانات بذكاء جداً (سر أدوات التتبع).</p>
+                </div>
+                <div class="card reveal" style="border-right: 5px solid #10b981;">
+                    <h3>تجربة المستخدم (UX)</h3>
+                    <p>الموقع سريع ومنظم، بيخلي رحلة البحث عن "بيت العمر" سهلة ومن غير وجع دماغ.</p>
+                </div>
             </div>
-          </div>
 
-          <div class="card small fade-up">
-            <h3 style="margin:0 0 8px 0">تعديل سريع؟</h3>
-            <div class="muted">قلّي لو عايز تغير اللون، تضيف لوجو، أو أطلّع نسخة Word (DOCX).</div>
-          </div>
+            <div class="section-title reveal" style="margin-top: 50px;">التحديات (نقاط الضعف)</div>
+            <div class="card-grid">
+                <div class="card reveal" style="border-right: 5px solid #ef4444;">
+                    <h3>تذبذب السوق</h3>
+                    <p>أي ركود عقاري بيأثر عليهم فوراً لأن دخلهم كله مرتبط بحركة البيع والعمولات.</p>
+                </div>
+                <div class="card reveal" style="border-right: 5px solid #ef4444;">
+                    <h3>تكلفة الاستحواذ (CAC)</h3>
+                    <p>الصرف على الإعلانات (جوجل، فيسبوك، تيك توك) مكلف جداً، ومحتاجين صفقات ضخمة مستمرة لتغطية
+                        المصاريف.</p>
+                </div>
+            </div>
 
-        </aside>
-      </div>
+            <div class="card reveal" style="margin-top: 40px; background: #fffbeb; border: 1px solid #fcd34d;">
+                <p style="text-align: center; font-size: 1.1rem; color: #92400e;"><b>الخلاصة يا هندسة:</b> ناوي شركة
+                    <b>Data</b> قبل ما تكون شركة عقارات. نجاحهم قايم على نظام تقني محكم بيربط بين Next.js وسيرفرات
+                    أمازون وفريق مبيعات مدرب يحول "البحث" لـ "بيع".
+                </p>
+            </div>
+        </section>
 
-      <footer>
-        محتوى التقرير مطابق للأصل — مفيش أي تغيير في الأرقام أو الأدوات.
-      </footer>
-    </div>
+        <!-- Strategy for Us -->
+        <section class="action-plan reveal">
+            <h2>إزاي نغطّي عليهم؟ (خطة الهجوم)</h2>
+
+            <div class="plan-item">
+                <h4>1. تجربة مستخدم من كوكب تاني (Next-Gen UX)</h4>
+                <p>بدل الفلاتر العادية ممكن نعمل <b>بحث بالذكاء الاصطناعي</b>. العميل يدخل يكتب: "عايز شقة قريبة من
+                    الجامعة الأمريكية وتقسيطها مريح"، والسيستم يفهمه ويرد عليه فوراً.</p>
+            </div>
+
+            <div class="plan-item">
+                <h4>2. سلاح البيانات والتوقعات (Predictive Data)</h4>
+                <p>هنعمل "محرك توقع أسعار". العميل يعرف سعر المتر في المنطقة دي هيبقى كام كمان سنتين. ده هيخلي
+                    المستثمرين يجروا ورانا لأننا بنقدم رؤية مستقبلية مش مجرد إعلان.</p>
+            </div>
+
+            <div class="plan-item">
+                <h4>3. أتمتة المبيعات (AI Sales Agent)</h4>
+                <p>أكبر تكلفة عند ناوي هي جيش المبيعات. إحنا م مكن نستخدم بوت متطور مربوط بـ GPT-4 يرد على 90% من
+                    استفسارات
+                    العملاء العميقة، وما يحولش العميل للموظف إلا وهو جاهز يمضي!</p>
+            </div>
+
+        </section>
+
+    </main>
+
+    <footer>
+        <p>تم إعداد هذا التقرير للعرض على البشمهندس أحمد</p>
+    </footer>
 
     <script>
-      // Scroll reveal
-      const io = new IntersectionObserver((entries)=>{
-        entries.forEach(e=>{
-          if(e.isIntersecting) e.target.classList.add('in-view');
-        })
-      },{threshold:0.12});
-      document.querySelectorAll('.fade-up,.card').forEach(n=>io.observe(n));
+        // GSAP Initialization
+        gsap.registerPlugin(ScrollTrigger);
 
-      // Animate progress bars & counters when visible
-      const stats = document.querySelectorAll('.stat');
-      const counterObserver = new IntersectionObserver((entries,obs)=>{
-        entries.forEach(entry=>{
-          if(!entry.isIntersecting) return;
-          const stat = entry.target;
-          const num = stat.querySelector('.num');
-          const fill = stat.querySelector('.fill');
-          const target = parseInt(num.getAttribute('data-target'))||0;
-          const percent = parseInt(fill.getAttribute('data-percent'))||0;
-
-          // animate number
-          let start = 0; const dur = 1000; const startTs = performance.now();
-          const step = (ts)=>{
-            const p = Math.min((ts-startTs)/dur,1);
-            num.textContent = Math.floor(p*target) + '%';
-            if(p<1) requestAnimationFrame(step);
-          };
-          requestAnimationFrame(step);
-
-          // animate fill
-          setTimeout(()=>{ fill.style.width = percent + '%'; }, 80);
-
-          obs.unobserve(stat);
+        // Header Animations
+        gsap.from(".hero-title", {
+            duration: 1.5,
+            y: 100,
+            opacity: 0,
+            ease: "power4.out"
         });
-      },{threshold:0.3});
-      document.querySelectorAll('.stat').forEach(s=>counterObserver.observe(s));
 
-      // Simple safe download fallback: if file links blocked, show alert
-      document.querySelectorAll('a[href^="file:"]').forEach(a=>{
-        a.addEventListener('click', (e)=>{
-          const href = a.getAttribute('href');
-          // browsers may block file:// links; show hint instead
-          e.preventDefault();
-          const text = 'لو الرابط مش شغال عندك: افتح الملف من سطح المكتب >> "Nawy Report.pdf"';
-          if(confirm(text + '\n\nهل تحبني أفتح لك الملف دلوقتي؟')){
-            window.location.href = href; // try to open anyway
-          }
-        })
-      });
+        gsap.from(".hero-subtitle", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.5,
+            ease: "power4.out"
+        });
+
+        // Reveal animations on scroll
+        const reveals = document.querySelectorAll('.reveal');
+        reveals.forEach(el => {
+            gsap.to(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 1,
+                y: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // Card Hover specialized animation (optional addition via JS if needed, but CSS handles basic)
     </script>
-  </body>
+</body>
+
 </html>
